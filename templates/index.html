@@ -72,9 +72,21 @@
                 <h3 class="text-center">ISI NILAI</h3>
                 <hr>
                 <form action="/setAlternatif" data-target="#step4" data-old="#step3" data-result="true">
-                    <div class="render-alternatif"></div>
-                    <a href="javascript:void(0)" onclick="renderAlternatif()">Tambah Alternatif</a>
-                    <a href="javascript:void(0)" class="float-end text-danger" onclick="deleteAlternatif()">Delete Alternatif</a>
+                    <div class="col-md-6 mx-auto">
+                        <select class="select form-control" id="optionFile">
+                            <option value="0">Manual</option>
+                            <option value="1">Upload File</option>
+                        </select>
+                    </div>
+                    <div id="manual">
+                        <div class="render-alternatif"></div>
+                        <a href="javascript:void(0)" onclick="renderAlternatif()">Tambah Alternatif</a>
+                        <a href="javascript:void(0)" class="float-end text-danger" onclick="deleteAlternatif()">Delete Alternatif</a>
+                    </div>
+                    <div id="uploadFile">
+                        <label for="">File</label>
+                        <input type="file" name="file" class="form-control-file">
+                    </div>
                     <button class="btn btn-dark w-100">NEXT</button>
                 </form>
             </div>
@@ -133,6 +145,24 @@
             }
         })
 
+        $('#optionFile').change(function() {
+            if($(this).val()) {
+                $('#manual').hide()
+                $('#uploadFile').show()
+            } else {
+                $('#manual').show()
+                $('#uploadFile').hide()
+            }
+        })
+
+        if($(this).val()) {
+            $('#manual').hide()
+            $('#uploadFile').show()
+        } else {
+            $('#manual').show()
+            $('#uploadFile').hide()
+        }
+        
         async function calculateResult() {
             const res = await fetch('calculate', {
                 headers:{
