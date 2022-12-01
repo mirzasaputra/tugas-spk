@@ -1,4 +1,5 @@
 import json
+import pandas as pd
 import numpy as np
 from flask import jsonify
 
@@ -12,23 +13,40 @@ def main() :
     L = np.array(data['L'])
     # set value W
     W = np.array(data['W'])
-    # set value A
-    A = np.array(data['A'])
-    A = np.transpose(A)
-    # set value K
-    K = np.array(data['K'])
+    if data['file'] == "" :
+      # set value A
+      A = np.array(data['A'])
 
-    # convert data type to float
-    data = []
-    for i in range(A.shape[0]) :
-        temp = []
-        for j in range(A[i].shape[0]) :
-            temp.append(float(A[i][j]))
+      # set value K
+      K = np.array(data['K'])
+      A = np.transpose(A)
 
-        data.append(temp)
-    
-    # replace value variable A
-    A = np.array(data)
+      # convert data type to float
+      data = []
+      for i in range(A.shape[0]) :
+          temp = []
+          for j in range(A[i].shape[0]) :
+              temp.append(float(A[i][j]))
+
+          data.append(temp)
+      
+      # replace value variable A
+      A = np.array(data)
+    else :
+      # set value A
+      path = data['file']
+      df = pd.read_csv(path)
+      A = np.array(df.iloc[:7,1:(len(W) + 1)].values)
+
+      # set value K
+      kriteria = df.iloc[:7,:1].values
+      K = []
+      for d in kriteria :
+        K.append(d[0])
+
+      K = np.array(K)
+      A = np.transpose(A)
+
 
     norm_result = validationPriority(L, A)
     result = calculateSaw(norm_result, W)

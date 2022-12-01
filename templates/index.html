@@ -71,7 +71,7 @@
             <div class="card-body">
                 <h3 class="text-center">ISI NILAI</h3>
                 <hr>
-                <form action="/setAlternatif" data-target="#step4" data-old="#step3" data-result="true">
+                <form action="/setAlternatif" data-target="#step4" data-old="#step3" data-result="true" enctype="multipart/form-data">
                     <div class="col-md-6 mx-auto">
                         <select class="select form-control" id="optionFile">
                             <option value="0">Manual</option>
@@ -83,7 +83,7 @@
                         <a href="javascript:void(0)" onclick="renderAlternatif()">Tambah Alternatif</a>
                         <a href="javascript:void(0)" class="float-end text-danger" onclick="deleteAlternatif()">Delete Alternatif</a>
                     </div>
-                    <div id="uploadFile">
+                    <div id="uploadFile" class="my-3">
                         <label for="">File</label>
                         <input type="file" name="file" class="form-control-file">
                     </div>
@@ -155,7 +155,7 @@
             }
         })
 
-        if($(this).val()) {
+        if($('#opotionFile').val()) {
             $('#manual').hide()
             $('#uploadFile').show()
         } else {

@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, jsonify
+import requests
 from controllers.wpm import main as calculateWPM
 from controllers.saw import main as calculateSAW
+from werkzeug.utils import secure_filename
+import os
 import json
 
 app = Flask(__name__)
@@ -43,11 +46,20 @@ def setAlternatif() :
     file = open('data.json', 'r')
     data = json.load(file)
 
-    data['K'] = request.form.getlist('alternatif_name[]')
-    
+    file = request.files['file']
+
     data['A'] = []
-    for i in range(len(request.form.getlist('alternatif_name[]'))) :
-        data['A'].append(request.form.getlist('alternatif'+ str(i+1) +'[]'))
+
+    if file.filename == '' :
+        data['K'] = request.form.getlist('alternatif_name[]')
+        data['file'] = ""
+
+        for i in range(len(request.form.getlist('alternatif_name[]'))) :
+            data['A'].append(request.form.getlist('alternatif'+ str(i+1) +'[]'))
+    else :
+        filename = secure_filename(file.filename)
+        data['file'] = filename
+        file.save(filename)
 
     with open('data.json', 'w') as outfile :
         json.dump(data, outfile)
