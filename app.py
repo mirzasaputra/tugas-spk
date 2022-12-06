@@ -3,6 +3,7 @@ import requests
 from controllers.wpm import main as calculateWPM
 from controllers.saw import main as calculateSAW
 from controllers.moora import main as calculateMOORA
+from controllers.topsis import main as calculateTOPSIS
 from werkzeug.utils import secure_filename
 import os
 import json
@@ -86,6 +87,8 @@ def calculate_wpm() :
         return calculateSAW()
     elif data['type'] == 'MOORA' :
         return calculateMOORA()
+    elif data['type'] == 'TOPSIS' :
+        return calculateTOPSIS()
 
 if __name__ == "__main__" :
     app.run(debug=True)
