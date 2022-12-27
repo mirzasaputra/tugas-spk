@@ -36,10 +36,10 @@ def main() :
       # set value A
       path = data['file']
       df = pd.read_csv(path)
-      A = np.array(df.iloc[:7,1:(len(W) + 1)].values)
+      A = np.array(df.iloc[0:,1:(len(W) + 1)].values)
 
       # set value K
-      kriteria = df.iloc[:7,:1].values
+      kriteria = df.iloc[0:,:1].values
       K = []
       for d in kriteria :
         K.append(d[0])
